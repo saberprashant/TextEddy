@@ -1,11 +1,27 @@
+body {
+  text-align: center;
+}
+
+#myform {
+  text-align: center;
+}
+
+#toolbar {
+  /* margin-left: 10%;  */
+}
+
 #editor {
   box-shadow: 0 0 2px #CCC;
-  min-height: 400px;
-  overflow-y : auto;
+  width: 80%;
+  height: 350px;
+  overflow : auto;
   padding: 1em;
   margin-top: 20px;
   resize: vertical;
   outline: none;
+  margin-left: 10%; 
+  text-align: left
+
 }
 
 #background {

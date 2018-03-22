@@ -9,17 +9,16 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="anchor.css">
+  <link rel="stylesheet" href="main.css">
   <script src="main.js"></script>
 
 </head>
 <body onLoad="iFrameOn();">
-        <h2>Text Eddy</h2>
+        <h2>Plone Text Editor</h2>
         <form name="myform" id="myform" method="post">
         <p>Title: <input name="title" id="title" type="text" size="80" maxlength="80" /></p>
-        <p>Content:<br>
-        <div id="wysiwyg_cp" style="padding:8px; width:700px;">
-          <select id="header" onchange="headers()">
+        <div id="toolbar">
+          <select id="heading" onchange="headers()">
             <option disabled selected option>Heading</option>
             <option value="H1">Heading 1</option>
             <option value="H2">Heading 2</option>
@@ -51,15 +50,16 @@
         </p>
         <br /><br /><input name="myBtn" type="button" value="Save Data" onClick="javascript:submit_form();"/>
         <div id="showMsg" style="display:none;"> **Scroll down the view to see the output.</div>
+        <hr>
         </form>
 
         <div style="display:none;" id="show">
           <br><br> 
-          <h2>Your Data</h2>
+          <h2>Your Saved Data</h2>
           <hr>
 
-          <h2 id="showTitle"></h2>
-          <div id="data"></div>
+          <h2 id="showTitle" style="text-align: center;"></h2>
+          <div id="data" style="text-align: left;"></div>
         </div>
 
         
