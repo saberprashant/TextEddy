@@ -1,13 +1,17 @@
-function iFrameOn(){
+function dataLoad(){
 	// document.designMode = 'On';
+	let data = {
+		idLinks : []
+	}
+	localStorage.setItem('data', JSON.stringify(data)); 
+	
 }
 
 function headers() {
-	var header = document.getElementById('header').value;
-	var userSelection;
-	var range;
+	let header = document.getElementById('heading').value;
+	let userSelection;
+	let range;
 	// console.log(header);
-	// var tag = document.execCommand('formatBlock', false, header);
 
 	if (window.getSelection) {					//Chrome & firefox
 			userSelection = window.getSelection();
@@ -24,15 +28,47 @@ function headers() {
 		range.setEnd(userSelection.focusNode, userSelection.focusOffset);
 	}
 
-	userSelection = String(userSelection).replace(/\s/g, '-');
+	userHeading = userSelection;						//the heading which user selected
+	userSelection = String(userSelection).replace(/\s/g, '-');			//making an id from heading text
 	userSelection = String(userSelection).replace(/--/g, '-');
 
-	document.execCommand('formatBlock', false, header).id = userSelection;
-	// tag.id = userSelection;
+	document.execCommand('formatBlock', false, header);
 
-	var link = '#' + userSelection;
-	document.execCommand('CreateLink',false,link);
+	// var tag = document.execCommand('formatBlock', false, header);
+	// document.execCommand(document.header.setAttribute("id", userSelection)); 	not working
+	// document.execCommand('formatBlock', false, header).id = userSelection;  	 not working
+	// tag.id = userSelection;				not working
+
+	let elemMain = $("#editor " + header.toLowerCase());   // this will find the div with id=editor and then
+																					// find the newly created tag
+	console.log(elemMain);
+	elemMain[elemMain.length - 1].id = userSelection;
+	console.log(elemMain);
+
+	let data2 = JSON.parse(localStorage.getItem('data'));
+	idLink = {
+		'id': userSelection,
+		'heading': userHeading
+	}
+	data2.idLinks.push(idLink);
+
+	let sel = document.getElementById('interLink');
+  let opt;
+  for (let i = 0; i < data2.idLinks.length; i++) {
+    opt = document.createElement('option');
+    opt.value = data2.idLinks[i].id;
+    opt.innerHTML = data2.idLinks[i].heading;
+    sel.appendChild(opt);
+  }
+	localStorage.setItem('data', JSON.stringify(data2));
 	// document.execCommand('ForeColor',false, 'black');
+
+}
+
+function interLinks() {
+	let idSel = document.getElementById('interLink').value;
+	let link = '#' + idSel;
+	document.execCommand('CreateLink', false, link);
 
 }
 
@@ -80,11 +116,12 @@ function iUnLink(){
 }
 
 function iImage(){
-	var imgSrc = prompt('Enter image location', '');
+	var imgSrc = prompt('Enter Image location', '');
     if(imgSrc != null){
         document.execCommand('insertimage', false, imgSrc); 
     }
 }
+
 
 function submit_form(){
 	document.getElementById('showTitle').innerHTML = document.getElementById("title").value;
@@ -92,6 +129,7 @@ function submit_form(){
 	document.getElementById('data').innerHTML = document.getElementById('editor').innerHTML;
 	var text = document.getElementById('editor').innerHTML;
 	console.log(text);
+	document.getElementById('editor').innerHTML = ''
 	document.getElementById('showMsg').style.display = '';
 	document.getElementById('show').style.display = '';
 }
